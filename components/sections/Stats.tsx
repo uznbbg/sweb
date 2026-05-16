@@ -26,7 +26,7 @@ export function Stats() {
         <dl className="grid grid-cols-2 gap-y-12 gap-x-6 md:grid-cols-4 md:gap-x-8">
           {STATS.map((s, i) => (
             <FadeIn key={s.label} delay={i * 0.06}>
-              <div className="flex flex-col items-center text-center md:items-start md:text-left">
+              <div className="flex flex-col items-center text-center">
                 <dt className="sr-only">{s.label}</dt>
                 <dd className="text-[44px] sm:text-[52px] md:text-[56px] font-semibold leading-[1.05] tracking-[-0.015em] text-apple-darkgray">
                   {s.value}

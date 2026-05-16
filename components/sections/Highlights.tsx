@@ -43,7 +43,7 @@ export function Highlights() {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-3 md:gap-10">
           {HIGHLIGHTS.map(({ icon: Icon, title, description }, i) => (
             <FadeIn key={title} delay={i * 0.08}>
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center text-center">
                 <Icon
                   className="h-6 w-6 text-apple-darkgray"
                   strokeWidth={1.5}
