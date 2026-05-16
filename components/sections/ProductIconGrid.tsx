@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { FadeIn } from '@/components/motion/FadeIn'
 
@@ -35,13 +36,12 @@ export function ProductIconGrid() {
                 className="group relative flex aspect-square w-full flex-col items-center justify-center gap-3 rounded-apple-tile bg-white px-4 py-6 transition-all duration-300 ease-apple hover:-translate-y-1 hover:shadow-[0_4px_24px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-apple-blue focus-visible:ring-offset-2 focus-visible:ring-offset-apple-offwhite"
               >
                 <span className="flex h-16 w-16 items-center justify-center md:h-20 md:w-20">
-                  {/* SVGs are small static brand illustrations; <img> avoids next/image SVG config. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={p.svg}
                     alt=""
                     width={80}
                     height={80}
+                    sizes="80px"
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-contain"

@@ -3,16 +3,26 @@ import { Phone } from 'lucide-react'
 import Link from 'next/link'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { ClaimForm } from './ClaimForm'
+import { buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Hasar Bildir',
+export const metadata: Metadata = buildMetadata({
+  title: 'Hasar Bildir — Online Hasar Bildirimi',
   description:
-    'Hasar bildiriminizi birkaç adımda iletin. Dakikalar içinde dosyanız açılır.',
-}
+    'Hasar bildiriminizi birkaç adımda online iletin. Fotoğraf yükleyin, dakikalar içinde dosyanız açılsın, aynı gün geri dönüş alın.',
+  path: '/hasar/bildir',
+  keywords: ['hasar bildirimi', 'online hasar', 'hasar dosyası aç', 'kasko hasar bildir'],
+})
+
+const ld = breadcrumbLd([
+  { name: 'Ana sayfa', path: '/' },
+  { name: 'Hasar', path: '/hasar' },
+  { name: 'Bildirim', path: '/hasar/bildir' },
+])
 
 export default function HasarBildirPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       {/* Compact hero */}
       <section className="relative bg-apple-offwhite overflow-hidden">
         <div aria-hidden className="absolute inset-0 apple-vignette pointer-events-none" />

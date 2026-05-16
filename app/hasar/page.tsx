@@ -8,12 +8,35 @@ import { FAQ, type FAQItem } from '@/components/sections/FAQ'
 import { CTABanner } from '@/components/sections/CTABanner'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { IMAGE_META } from '@/lib/image-meta'
+import { buildMetadata, breadcrumbLd, jsonLd, abs } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Hasar — Dakikalar içinde çözülen süreç.',
+export const metadata: Metadata = buildMetadata({
+  title: 'Hasar — Dakikalar İçinde Çözülen Süreç',
   description:
-    'Hasar bildirimi, takip ve ödeme süreci CDA Sigorta ile sade ve hızlı. Birkaç adımda hallolur.',
-}
+    'Hasar bildirimi, takip ve ödeme süreci CDA Sigorta ile sade ve hızlı. Fotoğraf gönderin, onay alın, aynı gün ödeme alın.',
+  path: '/hasar',
+  keywords: ['hasar bildirimi', 'hasar süreci', 'kasko hasar', 'sigorta hasar takip'],
+})
+
+const ld = [
+  breadcrumbLd([
+    { name: 'Ana sayfa', path: '/' },
+    { name: 'Hasar', path: '/hasar' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'Hasar bildirimi nasıl yapılır?',
+    description:
+      'CDA Sigorta üzerinden hasar bildirimi üç adımda tamamlanır: bildirin, doğrulayın, ödeme alın.',
+    totalTime: 'PT10M',
+    step: [
+      { '@type': 'HowToStep', position: 1, name: 'Bildirin', text: 'Uygulamadan veya web sitesinden bildirim formunu doldurun.', url: abs('/hasar/bildir') },
+      { '@type': 'HowToStep', position: 2, name: 'Doğrulayın', text: 'Fotoğraf veya belge yükleyin; ekibimiz hızlıca inceler.' },
+      { '@type': 'HowToStep', position: 3, name: 'Ödemeyi alın', text: 'Onaylanan hasarlarda ödemeniz aynı gün hesabınıza geçer.' },
+    ],
+  },
+]
 
 const STEPS = [
   {
@@ -59,6 +82,7 @@ const FAQ_ITEMS: FAQItem[] = [
 export default function HasarPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <ProductHero
         eyebrow="Hasar"
         title="Hasar süreci, dakikalar içinde."

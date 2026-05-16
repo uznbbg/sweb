@@ -7,12 +7,15 @@ import { ContactCards } from '@/components/sections/ContactCards'
 import { FAQ, type FAQItem } from '@/components/sections/FAQ'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { IMAGE_META } from '@/lib/image-meta'
+import { buildMetadata, breadcrumbLd, faqLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Destek — Yardım merkezine hoş geldiniz.',
+export const metadata: Metadata = buildMetadata({
+  title: 'Yardım Merkezi & Destek',
   description:
-    'Sıkça sorulanlar, kategori bazlı yardım ve canlı destek. Her sorunuza birkaç dakika içinde yanıt.',
-}
+    'Sıkça sorulanlar, kategori bazlı yardım, canlı destek ve telefon hattı. Sağlık, kasko, konut, hayat ve kurumsal sigorta sorularınız için tek adres.',
+  path: '/destek',
+  keywords: ['sigorta destek', 'yardım merkezi', 'sigorta SSS', 'müşteri hizmetleri'],
+})
 
 const CATEGORIES: { icon: LucideIcon; title: string; body: string; href: string }[] = [
   { icon: Stethoscope, title: 'Sağlık', body: 'Anlaşmalı hastaneler, geri ödeme süreçleri.', href: '/destek/saglik' },
@@ -46,9 +49,18 @@ const FAQ_ITEMS: FAQItem[] = [
   },
 ]
 
+const destekLd = [
+  breadcrumbLd([
+    { name: 'Ana sayfa', path: '/' },
+    { name: 'Destek', path: '/destek' },
+  ]),
+  faqLd(FAQ_ITEMS.map((it) => ({ q: it.question, a: it.answer }))),
+]
+
 export default function DestekPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(destekLd)} />
       <ProductHero
         eyebrow="Destek"
         title="Her sorunuzun bir yanıtı var."

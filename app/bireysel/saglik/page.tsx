@@ -9,17 +9,32 @@ import { FAQ, type FAQItem } from '@/components/sections/FAQ'
 import { CTABanner } from '@/components/sections/CTABanner'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { IMAGE_META } from '@/lib/image-meta'
+import {
+  SITE,
+  abs,
+  buildMetadata,
+  serviceLd,
+  faqLd,
+  breadcrumbLd,
+  jsonLd,
+} from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Sağlık Sigortası — Doktorun bir tık uzağında.',
   description:
-    'Özel hastanelerde anlaşmalı kadrolar, online muayene ve hızlı geri ödeme. CDA Sağlık ile sade ve şeffaf sağlık sigortası.',
-  openGraph: {
-    title: 'CDA Sağlık Sigortası',
-    description: 'Doktorun bir tık uzağında.',
-    images: [{ url: '/images/saglik-hero.webp', width: 2400, height: 1400 }],
-  },
-}
+    'Özel hastanelerde anlaşmalı 1500+ kadro, online muayene ve hızlı geri ödeme. Temel, Konfor ve Premier planlarıyla CDA Sağlık Sigortası teklifinizi 60 saniyede alın.',
+  path: '/bireysel/saglik',
+  image: '/images/saglik-hero.webp',
+  keywords: [
+    'sağlık sigortası',
+    'özel sağlık sigortası',
+    'tamamlayıcı sağlık sigortası',
+    'TSS',
+    'aile sağlık sigortası',
+    'online sağlık sigortası teklifi',
+    'CDA Sağlık',
+  ],
+})
 
 const PLANS: Plan[] = [
   {
@@ -95,9 +110,50 @@ const FAQ_ITEMS: FAQItem[] = [
   },
 ]
 
+const saglikLd = [
+  breadcrumbLd([
+    { name: 'Ana sayfa', path: '/' },
+    { name: 'Bireysel', path: '/bireysel' },
+    { name: 'Sağlık', path: '/bireysel/saglik' },
+  ]),
+  serviceLd({
+    name: 'CDA Sağlık Sigortası',
+    description:
+      'Özel sağlık ve tamamlayıcı sağlık sigortası — anlaşmalı 1500+ hastane, sınırsız muayene, ilaç katılımı, online doktor erişimi.',
+    path: '/bireysel/saglik',
+    serviceType: 'Sağlık Sigortası',
+  }),
+  faqLd(
+    FAQ_ITEMS.map((it) => ({ q: it.question, a: it.answer })),
+  ),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Sağlık planları',
+    itemListElement: PLANS.map((p, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Offer',
+        name: `${p.name} plan`,
+        price: p.price.replace(/[^0-9]/g, ''),
+        priceCurrency: 'TRY',
+        url: abs(p.href),
+        availability: 'https://schema.org/InStock',
+        eligibleRegion: { '@type': 'Country', name: 'Türkiye' },
+        seller: { '@id': `${SITE.url}/#organization` },
+      },
+    })),
+  },
+]
+
 export default function SaglikPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLd(saglikLd)}
+      />
       <ProductHero
         eyebrow="Sağlık"
         title="Doktorun bir tık uzağında."

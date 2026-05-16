@@ -2,16 +2,27 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { TrackForm } from './TrackForm'
+import { buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Hasar Takibi',
+export const metadata: Metadata = buildMetadata({
+  title: 'Hasar Takibi — Dosyanızı Anlık İzleyin',
   description:
-    'Dosya numaranızı girin, hasar sürecinizi adım adım takip edin.',
-}
+    'Hasar dosya numaranızla sürecin her adımını anlık takip edin. Bildirildi, incelemede, onaylandı, ödendi.',
+  path: '/hasar/takip',
+  noindex: true,
+  keywords: ['hasar takibi', 'hasar dosya sorgula', 'hasar sorgulama'],
+})
+
+const ld = breadcrumbLd([
+  { name: 'Ana sayfa', path: '/' },
+  { name: 'Hasar', path: '/hasar' },
+  { name: 'Takip', path: '/hasar/takip' },
+])
 
 export default function HasarTakipPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       {/* Compact hero */}
       <section className="relative bg-apple-offwhite overflow-hidden">
         <div aria-hidden className="absolute inset-0 apple-vignette pointer-events-none" />

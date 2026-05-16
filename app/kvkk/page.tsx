@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { LegalPage, type LegalSection } from '@/components/sections/LegalPage'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'KVKK Aydınlatma Metni',
   description:
     '6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında veri sorumlusu sıfatıyla aydınlatma yükümlülüğümüzü yerine getiriyoruz.',
-}
+  path: '/kvkk',
+})
 
 const SECTIONS: LegalSection[] = [
   {

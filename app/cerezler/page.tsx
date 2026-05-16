@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { LegalPage, type LegalSection } from '@/components/sections/LegalPage'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Çerez Politikası',
   description:
     'CDA Sigorta web sitesi ve mobil uygulamada kullanılan çerezler, neden kullandığımız ve nasıl kontrol edebileceğiniz.',
-}
+  path: '/cerezler',
+})
 
 const SECTIONS: LegalSection[] = [
   {

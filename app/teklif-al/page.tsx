@@ -4,12 +4,27 @@ import { ShieldCheck, Clock, Lock } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { QuoteFlow } from './QuoteFlow'
+import { buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Teklif Al',
+export const metadata: Metadata = buildMetadata({
+  title: 'Online Sigorta Teklifi — 60 Saniyede Hesapla',
   description:
-    'Birkaç adımda kişisel teklifinizi alın. Sade form, gizli ücret yok, dakikalar içinde poliçe.',
-}
+    'Sağlık, kasko, konut ve hayat sigortası teklifinizi 60 saniyede hesaplayın. Sade form, şeffaf fiyat, anında poliçe. Bağlayıcı değildir.',
+  path: '/teklif-al',
+  keywords: [
+    'sigorta teklifi',
+    'online sigorta teklifi',
+    'kasko teklifi',
+    'sağlık sigortası teklifi',
+    'konut sigortası teklifi',
+    'DASK teklifi',
+  ],
+})
+
+const ld = breadcrumbLd([
+  { name: 'Ana sayfa', path: '/' },
+  { name: 'Teklif Al', path: '/teklif-al' },
+])
 
 const REASSURANCES: { icon: LucideIcon; title: string; body: string }[] = [
   {
@@ -32,6 +47,7 @@ const REASSURANCES: { icon: LucideIcon; title: string; body: string }[] = [
 export default function TeklifAlPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       {/* Compact hero */}
       <section className="relative bg-apple-offwhite overflow-hidden">
         <div aria-hidden className="absolute inset-0 apple-vignette pointer-events-none" />

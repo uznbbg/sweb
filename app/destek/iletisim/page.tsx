@@ -2,12 +2,30 @@ import type { Metadata } from 'next'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { ContactForm } from './ContactForm'
+import { SITE, buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Bize Ulaşın',
+export const metadata: Metadata = buildMetadata({
+  title: 'İletişim — Bize Ulaşın',
   description:
-    'CDA Sigorta destek ekibine yazın, arayın veya merkezimizi ziyaret edin. Aynı iş günü içinde geri dönüş.',
-}
+    'CDA Sigorta destek ekibine yazın, arayın veya merkezimizi ziyaret edin. 7/24 telefon hattı, aynı iş günü içinde geri dönüş.',
+  path: '/destek/iletisim',
+  keywords: ['iletişim', 'sigorta iletişim', 'CDA Sigorta destek', 'müşteri hizmetleri'],
+})
+
+const ld = [
+  breadcrumbLd([
+    { name: 'Ana sayfa', path: '/' },
+    { name: 'Destek', path: '/destek' },
+    { name: 'İletişim', path: '/destek/iletisim' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'CDA Sigorta İletişim',
+    url: `${SITE.url}/destek/iletisim`,
+    mainEntity: { '@id': `${SITE.url}/#organization` },
+  },
+]
 
 const CHANNELS = [
   {
@@ -36,6 +54,7 @@ const CHANNELS = [
 export default function IletisimPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       {/* Compact hero */}
       <section className="relative bg-apple-offwhite overflow-hidden">
         <div aria-hidden className="absolute inset-0 apple-vignette pointer-events-none" />

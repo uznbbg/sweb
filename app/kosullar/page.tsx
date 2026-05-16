@@ -1,11 +1,13 @@
 import type { Metadata } from 'next'
 import { LegalPage, type LegalSection } from '@/components/sections/LegalPage'
+import { buildMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Kullanım Koşulları',
   description:
     'CDA Sigorta web sitesinin ve hizmetlerinin kullanım koşulları. Hak ve sorumlulukları sade bir dille açıklıyoruz.',
-}
+  path: '/kosullar',
+})
 
 const SECTIONS: LegalSection[] = [
   {

@@ -7,12 +7,27 @@ import { Stats } from '@/components/sections/Stats'
 import { CTABanner } from '@/components/sections/CTABanner'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { IMAGE_META } from '@/lib/image-meta'
+import { buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Kurumsal — Şirketinizi koruyan paketler.',
+export const metadata: Metadata = buildMetadata({
+  title: 'Kurumsal Sigorta — Şirketinizi Koruyan Paketler',
   description:
-    'KOBİ’den büyük ölçeğe, şirketinizin ihtiyaçlarına göre tasarlanmış sigorta çözümleri.',
-}
+    'KOBİ’den büyük ölçeğe; iş yeri, çalışan sağlığı, filo ve mesleki sorumluluk sigortası. CDA Sigorta ile şirketinizin tüm risklerini tek çatı altında yönetin.',
+  path: '/kurumsal',
+  keywords: [
+    'kurumsal sigorta',
+    'iş yeri sigortası',
+    'çalışan sağlık sigortası',
+    'filo sigortası',
+    'mesleki sorumluluk sigortası',
+    'KOBİ sigortası',
+  ],
+})
+
+const ld = breadcrumbLd([
+  { name: 'Ana sayfa', path: '/' },
+  { name: 'Kurumsal', path: '/kurumsal' },
+])
 
 const SOLUTIONS = [
   {
@@ -48,6 +63,7 @@ const SOLUTIONS = [
 export default function KurumsalPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <ProductHero
         eyebrow="Kurumsal"
         title="Şirketinize odaklanın. Korumayı bize bırakın."

@@ -6,16 +6,33 @@ import { Stats } from '@/components/sections/Stats'
 import { Testimonial } from '@/components/sections/Testimonial'
 import { CTABanner } from '@/components/sections/CTABanner'
 import { IMAGE_META } from '@/lib/image-meta'
+import { buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Bireysel — Size ve sevdiklerinize özel.',
+export const metadata: Metadata = buildMetadata({
+  title: 'Bireysel Sigorta — Size ve sevdiklerinize özel.',
   description:
-    'Sağlık, kasko, konut ve hayat sigortası. Bireysel ihtiyaçlarınız için sade ve şeffaf koruma.',
-}
+    'Sağlık, kasko, konut, hayat, DASK, seyahat ve daha fazlası. Bireysel ihtiyaçlarınız için sade ve şeffaf koruma. Teklifinizi 60 saniyede alın.',
+  path: '/bireysel',
+  keywords: [
+    'bireysel sigorta',
+    'sağlık sigortası',
+    'kasko',
+    'konut sigortası',
+    'hayat sigortası',
+    'DASK',
+    'sigorta teklifi',
+  ],
+})
+
+const ld = breadcrumbLd([
+  { name: 'Ana sayfa', path: '/' },
+  { name: 'Bireysel', path: '/bireysel' },
+])
 
 export default function BireyselPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <ProductHero
         eyebrow="Bireysel"
         title="Size ve sevdiklerinize özel."

@@ -7,12 +7,29 @@ import { Stats } from '@/components/sections/Stats'
 import { CTABanner } from '@/components/sections/CTABanner'
 import { FadeIn } from '@/components/motion/FadeIn'
 import { IMAGE_META } from '@/lib/image-meta'
+import { SITE, buildMetadata, breadcrumbLd, jsonLd } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Hakkımızda — Sigortayı yeniden tasarladık.',
+export const metadata: Metadata = buildMetadata({
+  title: 'Hakkımızda — Sigortayı Yeniden Tasarladık',
   description:
-    '25 yıllık tecrübe, 2 milyondan fazla müşteri. CDA Sigorta, koruma anlayışını sade ve şeffaf hâle getirir.',
-}
+    '25 yıllık tecrübe, 2 milyondan fazla müşteri, %98 memnuniyet. CDA Sigorta hakkında: vizyonumuz, değerlerimiz ve sigortayı sade ve şeffaf hâle getiren yaklaşımımız.',
+  path: '/hakkimizda',
+  keywords: ['hakkımızda', 'CDA Sigorta hakkında', 'sigorta şirketi', 'kurumsal kimlik'],
+})
+
+const ld = [
+  breadcrumbLd([
+    { name: 'Ana sayfa', path: '/' },
+    { name: 'Hakkımızda', path: '/hakkimizda' },
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: `${SITE.name} hakkında`,
+    url: `${SITE.url}/hakkimizda`,
+    mainEntity: { '@id': `${SITE.url}/#organization` },
+  },
+]
 
 const VALUES: { icon: LucideIcon; title: string; body: string }[] = [
   {
@@ -38,6 +55,7 @@ const VALUES: { icon: LucideIcon; title: string; body: string }[] = [
 export default function HakkimizdaPage() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={jsonLd(ld)} />
       <ProductHero
         eyebrow="Hakkımızda"
         title="Sigortayı yeniden tasarladık."

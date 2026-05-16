@@ -2,50 +2,95 @@ import type { Metadata, Viewport } from 'next'
 import { inter } from '@/lib/fonts'
 import { TopNav } from '@/components/nav/TopNav'
 import { Footer } from '@/components/nav/Footer'
+import { SITE, organizationLd, websiteLd, jsonLd } from '@/lib/seo'
 import './globals.css'
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cdasigorta.example'
+const defaultTitle = `${SITE.name} — Güvende olmak, hiç bu kadar sade olmamıştı.`
+const defaultDescription =
+  'Sizi ve sevdiklerinizi koruyan sigorta, yeniden tasarlandı. Sağlık, kasko, konut ve hayat sigortası teklifinizi 60 saniyede alın.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: 'CDA Sigorta — Güvende olmak, hiç bu kadar sade olmamıştı.',
-    template: '%s | CDA Sigorta',
+    default: defaultTitle,
+    template: `%s | ${SITE.name}`,
   },
-  description:
-    'Sizi ve sevdiklerinizi koruyan sigorta, yeniden tasarlandı. Sağlık, kasko, konut ve hayat sigortası teklifinizi 60 saniyede alın.',
-  applicationName: 'CDA Sigorta',
-  keywords: ['sigorta', 'sağlık sigortası', 'kasko', 'konut sigortası', 'hayat sigortası', 'CDA Sigorta'],
-  authors: [{ name: 'CDA Sigorta' }],
+  description: defaultDescription,
+  applicationName: SITE.name,
+  generator: 'Next.js',
+  category: 'Insurance',
+  keywords: [
+    'sigorta',
+    'online sigorta',
+    'sağlık sigortası',
+    'özel sağlık sigortası',
+    'tamamlayıcı sağlık sigortası',
+    'kasko',
+    'trafik sigortası',
+    'konut sigortası',
+    'DASK',
+    'hayat sigortası',
+    'seyahat sağlık sigortası',
+    'sigorta teklifi',
+    'CDA Sigorta',
+  ],
+  authors: [{ name: SITE.name, url: SITE.url }],
+  creator: SITE.name,
+  publisher: SITE.name,
+  referrer: 'origin-when-cross-origin',
+  formatDetection: { email: false, address: false, telephone: false },
+  alternates: {
+    canonical: SITE.url,
+    languages: { 'tr-TR': SITE.url },
+  },
   openGraph: {
     type: 'website',
-    locale: 'tr_TR',
-    url: siteUrl,
-    siteName: 'CDA Sigorta',
-    title: 'CDA Sigorta — Güvende olmak, hiç bu kadar sade olmamıştı.',
-    description: 'Sizi ve sevdiklerinizi koruyan sigorta, yeniden tasarlandı.',
-    images: [
-      {
-        url: '/images/og.webp',
-        width: 1200,
-        height: 630,
-        alt: 'CDA Sigorta',
-      },
-    ],
+    locale: SITE.locale,
+    url: SITE.url,
+    siteName: SITE.name,
+    title: defaultTitle,
+    description: defaultDescription,
+    images: [{ url: '/images/og.webp', width: 1200, height: 630, alt: SITE.name }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CDA Sigorta',
-    description: 'Sizi ve sevdiklerinizi koruyan sigorta, yeniden tasarlandı.',
+    site: SITE.twitter,
+    creator: SITE.twitter,
+    title: defaultTitle,
+    description: defaultDescription,
     images: ['/images/og.webp'],
   },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
+  icons: {
+    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }],
+    apple: [{ url: '/apple-icon.png', sizes: '180x180' }],
+  },
+  manifest: '/manifest.webmanifest',
+  verification: {
+    // google: 'replace-with-search-console-token',
+    // yandex: 'replace-with-yandex-token',
+  },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#FBFBFD',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FBFBFD' },
+    { media: '(prefers-color-scheme: dark)', color: '#1D1D1F' },
+  ],
+  colorScheme: 'light',
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
@@ -54,7 +99,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="tr" className={`${inter.variable} h-full`}>
+    <html lang="tr-TR" className={`${inter.variable} h-full`}>
+      <head>
+        <script
+          type="application/ld+json"
+          // Same-origin static JSON — safe to inline.
+          dangerouslySetInnerHTML={jsonLd([organizationLd(), websiteLd()])}
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-apple-offwhite text-apple-darkgray font-display">
         <a
           href="#main"
@@ -63,9 +115,9 @@ export default function RootLayout({
           Ana içeriğe geç
         </a>
         <TopNav />
-        <div id="main" className="flex-1 flex flex-col">
+        <main id="main" className="flex-1 flex flex-col">
           {children}
-        </div>
+        </main>
         <Footer />
       </body>
     </html>
