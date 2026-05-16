@@ -1,13 +1,11 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronRight } from 'lucide-react'
 import { FadeIn } from '@/components/motion/FadeIn'
-import { IMAGE_META } from '@/lib/image-meta'
 
 /**
  * Three alternating full-bleed spotlight panels.
  * A — black, centered ("Hasar süreci, dakikalar içinde.")
- * B — offwhite, two-column ("Cebinizde tüm poliçeleriniz." + product mockup)
+ * B — offwhite, centered ("Şeffaf fiyat, gizli ücret yok.")
  * C — black, centered ("7/24 destek, gerçek insanlar.")
  */
 export function FeatureSpotlight() {
@@ -57,55 +55,38 @@ function PanelA() {
   )
 }
 
-/* ---------- Panel B — offwhite, two-column ---------- */
+/* ---------- Panel B — offwhite, centered ---------- */
 function PanelB() {
   return (
     <section
       aria-labelledby="spotlight-b-title"
-      className="relative min-h-[700px] bg-apple-offwhite text-apple-darkgray"
+      className="relative min-h-[700px] bg-apple-offwhite text-apple-darkgray overflow-hidden"
     >
-      <div className="mx-auto grid min-h-[700px] max-w-apple-wide grid-cols-1 items-center gap-12 px-6 py-[120px] md:grid-cols-2 md:gap-16 md:px-8">
-        {/* Left — text */}
-        <div className="md:pr-8">
-          <FadeIn>
-            <p className="text-[14px] md:text-[17px] font-medium text-apple-midgray tracking-[-0.005em]">
-              Mobil uygulama
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h2
-              id="spotlight-b-title"
-              className="mt-3 max-w-[16ch] text-[40px] sm:text-[48px] md:text-[56px] font-semibold leading-[1.1] tracking-[-0.01em]"
-            >
-              Cebinizde tüm poliçeleriniz.
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.2}>
-            <p className="mt-6 max-w-[44ch] text-[20px] md:text-[24px] leading-[1.3] text-apple-darkgray/80">
-              Poliçeleriniz, hasar geçmişiniz ve sağlık kartınız tek bir
-              uygulamada. Birkaç dokunuşla her şey.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.3}>
-            <div className="mt-8 flex flex-col items-start gap-x-7 gap-y-3 sm:flex-row text-[17px]">
-              <SpotlightLink href="/uygulama" label="Uygulamayı keşfedin" tone="blue" />
-              <SpotlightLink href="/uygulama/indir" label="İndirin" tone="blue" />
-            </div>
-          </FadeIn>
-        </div>
-
-        {/* Right — visual */}
-        <FadeIn delay={0.15} y={32}>
-          <div className="relative mx-auto w-full max-w-[480px] aspect-[4/5] overflow-hidden rounded-apple-tile bg-apple-lightgray">
-            <Image
-              src="/images/spotlight-b.webp"
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              placeholder="blur"
-              blurDataURL={IMAGE_META.SPOTLIGHT_B.blurDataURL}
-              className="object-cover"
-            />
+      <div aria-hidden className="absolute inset-0 apple-vignette pointer-events-none" />
+      <div className="relative mx-auto flex min-h-[700px] max-w-apple-wide flex-col items-center justify-center px-6 py-[120px] text-center">
+        <FadeIn>
+          <p className="text-[14px] md:text-[17px] font-medium text-apple-midgray tracking-[-0.005em]">
+            Fiyat
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.1}>
+          <h2
+            id="spotlight-b-title"
+            className="mt-3 max-w-[18ch] text-[40px] sm:text-[48px] md:text-[56px] font-semibold leading-[1.1] tracking-[-0.01em]"
+          >
+            Şeffaf fiyat, gizli ücret yok.
+          </h2>
+        </FadeIn>
+        <FadeIn delay={0.2}>
+          <p className="mt-6 max-w-[44ch] text-[20px] md:text-[24px] leading-[1.3] text-apple-darkgray/80">
+            Hangi koruma için ne ödediğinizi en baştan görürsünüz. Sürpriz
+            kalem yok, dipnot yok.
+          </p>
+        </FadeIn>
+        <FadeIn delay={0.3}>
+          <div className="mt-8 flex flex-col items-center gap-x-7 gap-y-3 sm:flex-row text-[17px]">
+            <SpotlightLink href="/teklif-al" label="Teklif al" />
+            <SpotlightLink href="/bireysel" label="Ürünleri karşılaştır" />
           </div>
         </FadeIn>
       </div>

@@ -1,9 +1,8 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { ChevronRight } from 'lucide-react'
 import { StaggerWords } from '@/components/motion/StaggerWords'
 import { FadeIn } from '@/components/motion/FadeIn'
-import { IMAGE_META } from '@/lib/image-meta'
+import { ProductIconGrid } from '@/components/sections/ProductIconGrid'
 
 /**
  * Full-viewport hero. Server-rendered text + client-side stagger on the h1.
@@ -67,23 +66,10 @@ export function Hero() {
           </div>
         </FadeIn>
 
-        {/* Hero image — priority */}
-        <FadeIn delay={0.3} y={32}>
-          <div className="mt-14 md:mt-20 w-full max-w-[1100px] mx-auto">
-            <div className="relative w-full aspect-[12/7] overflow-hidden rounded-apple-tile bg-apple-lightgray">
-              <Image
-                src="/images/hero.webp"
-                alt=""
-                fill
-                priority
-                sizes="100vw"
-                placeholder="blur"
-                blurDataURL={IMAGE_META.HERO.blurDataURL}
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </FadeIn>
+        {/* Product icon grid — fills the hero space */}
+        <div className="mt-14 md:mt-20 w-full">
+          <ProductIconGrid />
+        </div>
       </div>
     </section>
   )
